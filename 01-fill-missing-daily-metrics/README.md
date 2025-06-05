@@ -1,14 +1,8 @@
 # 01 - Fill Missing Daily Metrics
 
-## Problem Description
+Implements `fillMissingMetrics(data: Metric[]): Metric[]` to fill missing days in a time series. The result includes exactly `METRIC_DAYS` entries (default: 7), from N days ago up to today (inclusive), all aligned to UTC midnight.
 
-This task is part of a backend exercise for a social media analytics platform. The system returns up to 7 days of metric data for a creator, sorted by date. However, data may be missing for some days.
-
-Your goal is to ensure **exactly 7 days of metric data**, from **6 days ago up to today (inclusive)**, all aligned to UTC midnight. Missing entries must be filled by copying data from the nearest available date.
-
-## Input Format
-
-Each entry in the input array has the following structure:
+## Metric Format
 
 ```ts
 type Metric = {
@@ -19,51 +13,17 @@ type Metric = {
 };
 ```
 
-- Input: up to `METRIC_DAYS` entries, sorted by ascending date.
-- Output: exactly `METRIC_DAYS` entries covering `[today - (METRIC_DAYS - 1), ..., today]`.
+## Rules
 
-## Fill-in Rules
-
+- Generate a fixed date range: `[today - (N - 1), ..., today]`
 - If a date is missing:
-  - Find the entry with the **smallest absolute distance** to the target date.
-  - If two are equally close, **prefer the earlier date**.
-- Clone the nearest metric and **replace the `date` field** with the target date.
-
-## Implementation Highlights
-
-- `METRIC_DAYS` is configurable via `config.ts`, defaulting to 7.
-- Dates are handled in UTC at midnight precision.
-- The logic uses a single-pass scan with a pointer index for efficient fallback selection.
-
-### Key Functions
-
-```ts
-function fillMissingMetrics(data: Metric[]): Metric[]
-```
-
-Returns a completed list of metrics for the target date range.
-
-```ts
-function getMetricDateByIndex(index: number, today: number): number
-```
-
-Computes the UTC midnight timestamp for the given index in the metric window.
-
-```ts
-function diffBetweenTimestamps(a: number, b: number): number
-```
-
-Computes absolute distance between two timestamps in milliseconds.
+  - Use the nearest available metric
+  - If tied, prefer the earlier (older) one
+- Replace only the `date` field when copying
 
 ## Example
 
-If `METRIC_DAYS = 7` and today is `2023-10-07T00:00:00Z`, the target range is:
-
-```
-2023-10-01T00:00:00Z to 2023-10-07T00:00:00Z
-```
-
-Given input:
+Input (2 metrics only):
 
 ```json
 [
@@ -72,7 +32,7 @@ Given input:
 ]
 ```
 
-Expected output:
+Output (`METRIC_DAYS = 7`):
 
 ```json
 [
@@ -80,7 +40,7 @@ Expected output:
   { "date": "2023-10-02T00:00:00Z", "followersCount": 100 },
   { "date": "2023-10-03T00:00:00Z", "followersCount": 100 },
   { "date": "2023-10-04T00:00:00Z", "followersCount": 100 },
-  { "date": "2023-10-05T00:00:00Z", "followersCount": 100 },
+  { "date": "2023-10-05T00:00:00Z", "followersCount": 700 },
   { "date": "2023-10-06T00:00:00Z", "followersCount": 700 },
   { "date": "2023-10-07T00:00:00Z", "followersCount": 700 }
 ]
@@ -88,38 +48,20 @@ Expected output:
 
 ## Testing
 
-Run tests with:
+Run with:
 
 ```bash
 npm install
 npm test
 ```
 
-The test suite covers:
+Test cases include:
+- Complete and sparse input
+- Equal-distance fallback logic
+- Different values of `METRIC_DAYS`
 
-- Complete 7-day range
-- Only early/late points (outside range)
-- Sparse entries (e.g., 1–3 points)
-- Equal-distance fallbacks
-- `METRIC_DAYS = 14` range validation
+## Notes
 
-Tests are located in:
-
-```ts
-01-fill-missing-daily-metrics/__tests__/solution.spec.ts
-```
-
-And use helper utilities like:
-
-```ts
-createMetric(overrides?: Partial<Metric>): Metric
-```
-
-To generate consistent mock data.
-
-## Bonus
-
-- ✅ Configurable window size via `config.METRIC_DAYS`
-- ✅ Modular and typed helper functions
-- ✅ Comprehensive Jest test suite
-- ✅ Efficient implementation (single-pass with lookahead)
+- Configurable via `config.METRIC_DAYS`
+- Efficient single-pass scan
+- Typed, modular, and test-covered
