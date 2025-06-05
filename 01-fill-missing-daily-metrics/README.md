@@ -19,6 +19,7 @@ type Metric = {
 - If a date is missing:
   - Use the nearest available metric
   - If tied, prefer the earlier (older) one
+  - If all available dates are after or before the target, use the boundary
 - Replace only the `date` field when copying
 
 ## Example

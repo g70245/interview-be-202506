@@ -42,6 +42,42 @@ describe('fillMissingMetrics with METRIC_DAYS = 7', () => {
     });
   });
 
+  describe('when input only contains one metric after the range', () => {
+    it('should fallback to the only metric when all dates are before it', () => {
+      const futureMetric = createMetric({
+        date: expectedDates[6] + MS_PER_DAY, // after entire range
+        followersCount: 999,
+      });
+
+      const result = fillMissingMetrics([futureMetric]);
+
+      const expected = expectedDates.map((date) => ({
+        ...futureMetric,
+        date,
+      }));
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when input only contains one metric before the range', () => {
+    it('should fallback to the only metric when all dates are after it', () => {
+      const earlyMetric = createMetric({
+        date: expectedDates[0] - MS_PER_DAY, // before entire range
+        followersCount: 111,
+      });
+
+      const result = fillMissingMetrics([earlyMetric]);
+
+      const expected = expectedDates.map((date) => ({
+        ...earlyMetric,
+        date,
+      }));
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('when input only contains two metrics outside the range', () => {
     it('should fallback to nearest metric for each day', () => {
       const earlyMetric = createMetric({
