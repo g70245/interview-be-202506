@@ -19,7 +19,7 @@ type Metric = {
 - If a date is missing:
   - Use the nearest available metric
   - If tied, prefer the earlier (older) one
-  - If all available dates are after or before the target, use the boundary
+  - If all available dates are after or before the target, use the boundary (first or last entry)
 - Replace only the `date` field when copying
 
 ## Example
@@ -59,6 +59,7 @@ npm test
 Test cases include:
 - Complete and sparse input
 - Equal-distance fallback logic
+- Fallback when all data is before or after the target range
 - Different values of `METRIC_DAYS`
 
 ## Notes
