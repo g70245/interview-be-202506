@@ -1,7 +1,7 @@
 # Backend Interview Assignments
 
-This repository contains my solutions to multiple backend interview questions.  
-Each assignment is organized in its own folder with code, explanation, and test cases (if applicable).
+Solutions to a backend interview assignment with multiple questions.  
+Each question is organized in its own folder.
 
 ## Assignments
 
