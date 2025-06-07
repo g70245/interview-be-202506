@@ -1,6 +1,6 @@
 # 01 - Fill Missing Daily Metrics
 
-Implements `fillMissingMetrics(data: Metric[]): Metric[]` to fill missing days in a time series. The result includes exactly `METRIC_DAYS` entries (default: 7), from N days ago up to today (inclusive), all aligned to UTC midnight.
+Implements `fillMissingMetrics(data: Metric[]): Metric[]` to fill missing days in a time series. The result includes exactly `METRIC_DAYS` entries (default: 7), from `METRIC_DAYS - 1` days ago up to today (inclusive), all aligned to UTC midnight.
 
 ## Metric Format
 
