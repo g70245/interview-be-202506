@@ -14,7 +14,8 @@ Identify and explain the root cause of a code issue.
 → [See README](./02-debug/README.md)
 
 ### 03 - Database Schema Design  
-Design a schema based on the given requirements.
+Design a normalized SQL schema to track API usage, manage user credits, and support monthly analytics.  
+→ [See README](./03-database-schema-design/README.md)
 
 ## Tech Stack
 
