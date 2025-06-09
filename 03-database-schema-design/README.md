@@ -95,7 +95,7 @@ erDiagram
 ```ts
 type User = {
   userId: string;               // User ID
-  prepurchasedCredits: number; // Available credits for API use
+  prepurchasedCredits: number;  // Available credits for API use
   createdAt: number;            // When the user was created (UTC)
   updatedAt: number;            // When the user info was last updated (UTC)
 };
