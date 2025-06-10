@@ -6,7 +6,7 @@ function buildExpectedDates(days: number, today: number): number[] {
   return Array.from({ length: days }, (_, i) => today - (days - 1 - i) * MS_PER_DAY);
 }
 
-export function createMetric(overrides: Partial<Metric> = {}): Metric {
+function createMetric(overrides: Partial<Metric> = {}): Metric {
   return {
     date: Date.now(),
     averageLikesCount: 100,

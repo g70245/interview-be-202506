@@ -121,7 +121,7 @@ type UserAPIUsageMonthlySummary = {
   month: string;             // Month (format: 'YYYY-MM')
   userId: string;            // Who used the API
   endpoint: APIEndpoint;     // Which API was used
-  requestCount: number;      // Number of times this user used the API this month
+  requestCount: number;      // Total Number of calls this user used the API this month
   creditsCharged: number;    // Total credits deducted for this user this month
   createdAt: number;         // When this summary was created (UTC)
   updatedAt: number;         // When it was last updated (UTC)
